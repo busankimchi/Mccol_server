@@ -20,10 +20,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var gallery = require('./routes/index_image');
+var image = require('./routes/index_image');
+var contacts = require('./routes/index_contact');
+var login = require('./routes/index_login');
 var usersRouter = require('./routes/users');
 
-app.use('/gallery', gallery);
+app.use('/image', image);
+app.use('/contacts', contacts);
+app.use('/login', login);
+
 app.use('/users', usersRouter);
 
 var mongoose = require('mongoose');
@@ -31,8 +36,10 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // CONNECT TO MONGODB SERVER
-mongoose.connect('mongodb://localhost/image_db')
-  .then(() => console.log('Successfully connected to mongodb!!'))
+
+mongoose.connect('mongodb://localhost:27017/DB')
+  .then(() => console.log('Successfully connected to DB!!'))
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
